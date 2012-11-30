@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 
 #include "NeuronClass.h"
 
@@ -45,7 +45,7 @@
       
       if(old_sensor_excitement >= threshold){
 	      for(i = 0; i < out_neuron.size(); i++){
-	        out_neuron[i]->sensor_excitement = axon_coef[i];
+	        out_neuron[i]->sensor_excitement += axon_coef[i];
 	        if(out_neuron[i]->sensor_excitement >= out_neuron[i]->threshold){
 	          out_neuron[i]->mark_of_sensor = 1;  
 	        }
@@ -63,7 +63,7 @@
       int i;
       if(old_sensor_excitement >= threshold){
 	  for(i = 0; i < out_neuron.size(); i++){
-	        out_neuron[i]->sensor_excitement = axon_coef[i];
+	        out_neuron[i]->sensor_excitement += axon_coef[i];
 	  }
 	  old_sensor_excitement = 0;
 	  return 1;
@@ -82,7 +82,7 @@
             axon_num++;
 	        }
 	        
-          in_neuron[i]->actuator_excitement = in_neuron[i]->axon_coef[axon_num];
+          in_neuron[i]->actuator_excitement += in_neuron[i]->axon_coef[axon_num];
 	        
           if(in_neuron[i]->actuator_excitement >= in_neuron[i]->threshold){
 	          in_neuron[i]->mark_of_actuator = 1;
@@ -100,6 +100,6 @@
     void Neuron::Forgetting(double forgetting_force){
       int i;
       for(i = 0; i < axon_coef.size(); i++){
-	axon_coef[i] *= forgetting_force;
+	axon_coef[i] -= forgetting_force;
       }
     }
