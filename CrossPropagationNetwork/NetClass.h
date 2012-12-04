@@ -1,11 +1,15 @@
+#ifndef NET_CLASS_H
+#define NET_CLASS_H
 
+#pragma once
 
 #include "headers.h"
 #include "NeuronClass.h"
 
+using namespace System;
  
 
- class NeuralNet{
+public class NeuralNet{
 	private:
 		int current_position_in_sensors_logfile;
 
@@ -29,7 +33,7 @@
 	std::ifstream sensors_file;
 	NeuralNet();
 	void SensorIterate();
-	void NetStat();
+	void con_NetStat();
 	void GetSensors();
 	void GetSensors(int*heights);
 	std::vector<bool> Get_Actuator_State();
@@ -39,3 +43,5 @@
 	void WorkingIterate(double decrease_speed);
 	void Teach(double teaching_force, double forgetting_force);
 	};
+
+#endif //NET_CLASS_H

@@ -10,7 +10,7 @@
   std::vector<int> heights;
   std::ofstream  save_file("log.txt", std::ofstream::out);
   std::vector<bool> command;
-
+  
 extern "C" __declspec(dllexport) void __stdcall InitNet(){
 	
 	save_file << "InitNet() started OK" << std::endl;

@@ -23,6 +23,7 @@ class sensor_layer{
 		sensor*GetSensor(int n);
 		void Translate(int oldx, int oldy, int*newx, int*newy, int xt, int yt, double cos_angle, double sin_angle);
 		int AverageHeight(sensor A, int xt, int yt, double cos_angle, double sin_angle);
+		void PascalCoord2Normal(int xc, int yc, int w, int h, int *x1, int *y1, int *x2, int*y2);
 	public:
 		FILE *in;
 		int xa, ya; //цель
