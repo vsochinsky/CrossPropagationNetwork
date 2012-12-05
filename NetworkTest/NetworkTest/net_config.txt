@@ -1,0 +1,6 @@
+num_net 1000
+num_axons 7
+range_of_coef 100
+init_threshold 85
+input_layer_size 20
+output_layer_size 10
