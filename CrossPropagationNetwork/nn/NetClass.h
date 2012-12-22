@@ -32,14 +32,14 @@ public class NeuralNet{
 
 	std::ifstream sensors_file;
 	NeuralNet();
-	void SensorIterate();
+	void SensorIterate(double teach_force);
 	void con_NetStat();
 	void GetSensors();
 	void GetSensors(int*heights);
 	std::vector<bool> Get_Actuator_State();
 	void Save(char *file_name);
 	void Load(char * file_name);
-	void ActuatorIterate();
+	void ActuatorIterate(double teach_force);
 	void WorkingIterate(double decrease_speed);
 	void Teach(double teaching_force, double forgetting_force);
 	};
