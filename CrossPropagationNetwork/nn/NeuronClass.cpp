@@ -35,19 +35,18 @@
     
 
     void Neuron::ExcitementDecrease(double decrease_speed){
-	  //actuator_excitement *= pow(decrease_speed, (-1) * fabs((double)actuator_excitement));
-      //sensor_excitement *= pow(decrease_speed, (-1) * fabs((double)sensor_excitement));
-	  //mark_of_actuator *= 1 / decrease_speed;
-      //mark_of_sensor *= 1 / decrease_speed;		
+
+	  actuator_excitement = actuator_excitement - (100 - actuator_excitement) * decrease_speed / 100; // *= pow(decrease_speed, (-1) * fabs((double)actuator_excitement));
+      sensor_excitement = sensor_excitement - (100 - sensor_excitement) * decrease_speed / 100;// *= pow(decrease_speed, (-1) * fabs((double)sensor_excitement));
     }
   
   
     int Neuron::SensorSpike(double teach_force){				
-      int i;
+      unsigned int i;
       
       if(old_sensor_excitement >= threshold){
 	      for(i = 0; i < out_neuron.size(); i++){
-	        out_neuron[i]->sensor_excitement += out_axon_coef[i].first;
+	        out_neuron[i]->sensor_excitement = out_neuron[i]->sensor_excitement + (100 - out_neuron[i]->sensor_excitement)*out_axon_coef[i].first/100;	// TODO normalize all the network by 100
 	        if(out_neuron[i]->sensor_excitement >= out_neuron[i]->threshold){
 	          out_neuron[i]->in_axon_coef[out_axon_coef[i].second].first += teach_force;  
 	        }
@@ -62,7 +61,7 @@
     }
     
     int Neuron::Spike(){
-      int i;
+      unsigned int i;
       if(old_sensor_excitement >= threshold){
 	  for(i = 0; i < out_neuron.size(); i++){
 	        out_neuron[i]->sensor_excitement += out_axon_coef[i].second;
@@ -74,17 +73,16 @@
     }
     
     int Neuron::ActuatorSpike(double teach_force){
-      int i;
+      unsigned int i;
       
       if(old_actuator_excitement >= threshold){
 	      for(i = 0; i < in_neuron.size(); i++){
+
+			in_neuron[i]->actuator_excitement = in_neuron[i]->actuator_excitement + (100 - in_neuron[i]->actuator_excitement) * in_axon_coef[i].first / 100;
 	        
-	        
-          in_neuron[i]->actuator_excitement += in_axon_coef[i].first;
-	        
-          if(in_neuron[i]->actuator_excitement >= in_neuron[i]->threshold){
-	          in_neuron[i]->out_axon_coef[in_axon_coef[i].second].first += teach_force;
-	        }
+			  if(in_neuron[i]->actuator_excitement >= in_neuron[i]->threshold){
+				  in_neuron[i]->out_axon_coef[in_axon_coef[i].second].first += teach_force;
+				}
 	      }
 	      
         old_actuator_excitement = 0;///discharging neuron after spike
@@ -96,8 +94,11 @@
     }
 
     void Neuron::Forgetting(double forgetting_force){
-      int i;
-      //for(i = 0; i < axon_coef.size(); i++){
-	//axon_coef[i] -= forgetting_force;
+      unsigned int i;
+		for(i = 0; i < out_axon_coef.size(); i++){
+			out_axon_coef[i].first *= forgetting_force;
       }
-    
+    for(i = 0; i < in_axon_coef.size(); i++){
+			in_axon_coef[i].first *= forgetting_force;
+	}
+	}

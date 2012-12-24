@@ -38,8 +38,8 @@ extern "C" __declspec(dllexport) void  __stdcall Iterate(int sensorIters, int ac
 
   ///teaching
   for(z = 0; z < actuatorIters; z++){
-	  net.SensorIterate(1);
-	  net.ActuatorIterate(1);
+	  net.SensorIterate();
+	  net.ActuatorIterate();
 	  //printf("teach ok\n");
   }
   save_file << "Iterate() finished OK" << std::endl;

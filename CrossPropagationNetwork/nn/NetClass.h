@@ -12,6 +12,9 @@ using namespace System;
 public class NeuralNet{
 	private:
 		int current_position_in_sensors_logfile;
+		double decrease_speed;
+		double forgetting_force;
+		double teach_force;
 
 	public:
 		std::ofstream  actuators_out;
@@ -32,14 +35,14 @@ public class NeuralNet{
 
 	std::ifstream sensors_file;
 	NeuralNet();
-	void SensorIterate(double teach_force);
+	void SensorIterate();
 	void con_NetStat();
 	void GetSensors();
 	void GetSensors(int*heights);
 	std::vector<bool> Get_Actuator_State();
 	void Save(char *file_name);
 	void Load(char * file_name);
-	void ActuatorIterate(double teach_force);
+	void ActuatorIterate();
 	void WorkingIterate(double decrease_speed);
 	void Teach(double teaching_force, double forgetting_force);
 	};

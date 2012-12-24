@@ -16,19 +16,12 @@ class Neuron{
     double old_sensor_excitement, old_actuator_excitement, sensor_excitement, actuator_excitement, threshold; 
 
     Neuron();
-
   
     void SetCoefRand(double range_of_coef, int num_axons);
 
-
-
-  
     void AddAxonConnection(Neuron *exit);
-    
-    
 
     void ExcitementDecrease(double decrease_speed);
-  
   
     int SensorSpike(double teach_force);
     

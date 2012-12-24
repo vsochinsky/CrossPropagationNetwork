@@ -4,3 +4,6 @@ range_of_coef 100
 init_threshold 85
 input_layer_size 20
 output_layer_size 10
+decrease_speed 20
+forgetting_force 10000000000
+teach_force 1000000000000000
