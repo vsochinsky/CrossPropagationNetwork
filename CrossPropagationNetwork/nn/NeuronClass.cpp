@@ -8,8 +8,7 @@
       actuator_excitement = 0;
       sensor_excitement = 0;
       threshold = 0;
-      mark_of_actuator = 0;
-      mark_of_sensor = 0;
+      
     }
 
   
@@ -29,7 +28,7 @@
 	  
 	  exit->in_neuron.push_back(this);
 
-	  exit->in_axon_coef.push_back(std::make_pair(out_axon_coef[out_neuron.size() - 1],  out_neuron.size() - 1));
+	  exit->in_axon_coef.push_back(std::make_pair(out_axon_coef[out_neuron.size() - 1].first,  out_neuron.size() - 1));
 	  out_axon_coef[out_neuron.size() - 1].second = exit->in_neuron.size() - 1;
     }
     
@@ -101,4 +100,4 @@
       //for(i = 0; i < axon_coef.size(); i++){
 	//axon_coef[i] -= forgetting_force;
       }
-    }
+    

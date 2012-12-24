@@ -13,7 +13,7 @@ class Neuron{
     typedef std::vector<ppair> Coef_lists;
     Neuron_lists out_neuron, in_neuron;
     Coef_lists out_axon_coef, in_axon_coef;
-    double old_sensor_excitement, old_actuator_excitement, sensor_excitement, actuator_excitement,/*for wave from sensor and moto it done in order to make them independence*/ threshold, mark_of_sensor, mark_of_actuator; 
+    double old_sensor_excitement, old_actuator_excitement, sensor_excitement, actuator_excitement, threshold; 
 
     Neuron();
 

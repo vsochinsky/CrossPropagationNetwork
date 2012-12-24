@@ -326,23 +326,30 @@ void NeuralNet::Save(char *file_name){
 void NeuralNet::Load(char * file_name){
    std::ifstream load_file(file_name, std::ifstream::in);
    int i, e, n, q = 0;
+   double a;
    load_file >> hidden_layer_size >> input_layer_size >> output_layer_size >> num_axons;
    for(i = 0; i < hidden_layer_size; i++){
+	   hidden_layer[i].out_axon_coef.clear();
+	   hidden_layer[i].in_axon_coef.clear();
 	 load_file >> hidden_layer[i].threshold >> hidden_layer[i].sensor_excitement >> hidden_layer[i].old_sensor_excitement >>hidden_layer[i].actuator_excitement >> hidden_layer[i].old_actuator_excitement;
 	 for(e = 0; e < num_axons; e++){
-	   load_file >> hidden_layer[i].axon_coef[e];
+	   load_file >> a;
+	   hidden_layer[i].out_axon_coef.push_back(std::make_pair(a, 0));
 	}
 	hidden_layer[i].out_neuron.clear();
 	hidden_layer[i].in_neuron.clear();
   }
   for(i=0; i < output_layer_size; i++){
-	  load_file >> output_layer[i].threshold >> output_layer[i].sensor_excitement >> output_layer[i].old_sensor_excitement;
+	  load_file >> output_layer[i].threshold >> output_layer[i].sensor_excitement >> output_layer[i].old_sensor_excitement >> output_layer[i].actuator_excitement >> output_layer[i].old_actuator_excitement;
 	  output_layer[i].in_neuron.clear();
+	  output_layer[i].in_axon_coef.clear();
   }
   for(i = 0; i < input_layer_size; i++){
-	  load_file >> input_layer[i].threshold >> input_layer[i].sensor_excitement >> input_layer[i].old_sensor_excitement;
+	  input_layer[i].out_axon_coef.clear();
+	  load_file >> input_layer[i].threshold >> input_layer[i].sensor_excitement >> input_layer[i].old_sensor_excitement >> input_layer[i].actuator_excitement >> input_layer[i].old_actuator_excitement;
 	  for(e = 0; e < num_axons; e++){
-	load_file >> input_layer[i].axon_coef[e];
+	load_file >> a;
+	input_layer[i].out_axon_coef.push_back(std::make_pair(a, 0));
 	  }
 	  input_layer[i].out_neuron.clear();
   }
@@ -352,11 +359,9 @@ void NeuralNet::Load(char * file_name){
 	//q++;
 	if(n >= hidden_layer_size){
 	  hidden_layer[i].AddAxonConnection(&output_layer[n - hidden_layer_size]);
-	  output_layer[n - hidden_layer_size].AddDendriteConnection(&hidden_layer[i]);
 	}
 	else{
 	  hidden_layer[i].AddAxonConnection(&hidden_layer[n]);
-	  hidden_layer[n].AddDendriteConnection(&hidden_layer[i]);
 	}
 	}
    }
@@ -364,9 +369,8 @@ void NeuralNet::Load(char * file_name){
 	 for(e = 0; e < num_axons; e++){
 	   load_file >> n;
 	   //std::cout << n << " ";
-	   q++;
+	   //q++;
 	   input_layer[i].AddAxonConnection(&hidden_layer[n]);
-	   hidden_layer[n].AddDendriteConnection(&input_layer[i]);
 	}
   }
   //cout  << " load "<<std::cout;
@@ -394,4 +398,3 @@ void NeuralNet::WorkingIterate(double decrease_speed){
 
 
 
-}
